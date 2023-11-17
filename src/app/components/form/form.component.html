@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="form-container">
+    <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
+      <div>
+        <label for="username">Correo electrónico:</label>
+        <input type="email" id="username" formControlName="username" />
+        <div *ngIf="isFieldInvalid('username')">
+          <div *ngIf="authForm.get('username')?.hasError('required')">
+            El correo electrónico es obligatorio.
+          </div>
+          <div *ngIf="authForm.get('username')?.hasError('email')">
+            Ingresa un correo electrónico válido.
+          </div>
+        </div>
+      </div>
+      <div>
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" formControlName="password" />
+        <div *ngIf="isFieldInvalid('password')">
+          <div *ngIf="authForm.get('password')?.hasError('required')">
+            La contraseña es obligatoria.
+          </div>
+          <div
+            *ngIf="
+              authForm.get('password')?.hasError('minlength') ||
+              authForm.get('password')?.hasError('maxlength')
+            "
+          >
+            La contraseña debe tener entre 8 y 15 caracteres.
+          </div>
+        </div>
+      </div>
+      <button type="submit" [disabled]="authForm.invalid">
+        Iniciar sesión
+      </button>
+    </form>
+  </div>
+</div>
